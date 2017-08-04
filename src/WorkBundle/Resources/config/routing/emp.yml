@@ -1,0 +1,24 @@
+emp_index:
+    path:     /
+    defaults: { _controller: "WorkBundle:Emp:index" }
+    methods:  GET
+
+emp_show:
+    path:     /{id}/show
+    defaults: { _controller: "WorkBundle:Emp:show" }
+    methods:  GET
+
+emp_new:
+    path:     /new
+    defaults: { _controller: "WorkBundle:Emp:new" }
+    methods:  [GET, POST]
+
+emp_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WorkBundle:Emp:edit" }
+    methods:  [GET, POST]
+
+emp_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WorkBundle:Emp:delete" }
+    methods:  DELETE

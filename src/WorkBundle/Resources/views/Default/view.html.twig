@@ -1,0 +1,18 @@
+{% extends '@Work/Default/layout.html.twig' %}
+    {% block content %}
+        {# for view in views #}
+			<div class="col-sm-8">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+					<h3 class="panel-title">{{ views.title }}</h3>
+				  </div>
+				  <div class="panel-body">
+					{{ views.short }}<br>
+					{{ views.full }}
+					<div align="rigth" style="position:right;">[created: {{ views.createdAt|date('d-m-Y') }}]</div>
+				  </div>
+				</div>
+            </div>
+        {# endfor #}
+    {% endblock %}
+	

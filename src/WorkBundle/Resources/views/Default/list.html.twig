@@ -1,0 +1,17 @@
+{% extends '@Work/Default/layout.html.twig' %}
+    {% block content %}
+        {% for new in news %}
+			<div class="col-sm-8">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+					<h3 class="panel-title">{{ new.title }}</h3>
+				  </div>
+				  <div class="panel-body">
+					{{ new.short }}
+					<div align="rigth" style="position:right;">[created: {{ new.createdAt|date('d-m-Y') }}]</div>
+				  </div>
+				</div>
+            </div>
+        {% endfor %}
+    {% endblock %}
+	

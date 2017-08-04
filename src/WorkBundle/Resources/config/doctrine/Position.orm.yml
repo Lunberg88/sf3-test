@@ -1,0 +1,25 @@
+WorkBundle\Entity\Position:
+    type: entity
+    table: null
+    repositoryClass: WorkBundle\Repository\PositionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        number:
+            type: integer
+        parent:
+            type: integer
+        name:
+            type: string
+            length: 255
+
+    oneToMany:
+            emp:
+                targetEntity: WorkBundle\Entity\Emp
+                mappedBy: position
+
+    lifecycleCallbacks: {  }
