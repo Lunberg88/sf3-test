@@ -1,6 +1,17 @@
 WorkBundle\Entity\Position:
     type: entity
     table: null
+    oneToMany:
+            employee:
+                targetEntity: WorkBundle\Entity\Employee
+                mappedBy: position
+    oneToOne:
+            position:
+                targetEntity: WorkBundle\Entity\Position
+                joinColumn:
+                    name: parent_id
+                    referencedColumnName: id
+                    onDelete: CASCADE
     repositoryClass: WorkBundle\Repository\PositionRepository
     id:
         id:
@@ -11,15 +22,11 @@ WorkBundle\Entity\Position:
     fields:
         number:
             type: integer
-        parent:
+        parentId:
             type: integer
+            column: parent_id
+            nullable: true
         name:
             type: string
             length: 255
-
-    oneToMany:
-            emp:
-                targetEntity: WorkBundle\Entity\Emp
-                mappedBy: position
-
     lifecycleCallbacks: {  }

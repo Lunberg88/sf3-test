@@ -1,0 +1,29 @@
+WorkBundle\Entity\Employee:
+    type: entity
+    table: null
+    manyToOne:
+              position:
+                  targetEntity: WorkBundle\Entity\Position
+                  inversedBy: employee
+                  joinColumn:
+                      name: position_id
+                      referencedColumnName: id
+    repositoryClass: WorkBundle\Repository\EmployeeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        fio:
+            type: string
+            length: 255
+        positionId:
+            type: integer
+            column: position_id
+        salary:
+            type: integer
+        date:
+            type: datetime
+    lifecycleCallbacks: {  }

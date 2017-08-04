@@ -2,12 +2,13 @@
 
 namespace WorkBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use WorkBundle\Entity\Emp;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use WorkBundle\Entity\Position;
+use WorkBundle\Entity\Employee;
 
-class LoadUserData extends AbstractFixture implements FixtureInterface
+class LoadEmpData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -19,9 +20,9 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
               '3' => 'Nazar Sushak',
             ];
 
-            $emp = new Emp();
+            $emp = new Employee();
             $emp->setFio($fio[rand(0,3)]);
-            $emp->setPos($manager->merge(rand($this->getReference('pos2'), $this->getReference('pos5'))));
+            $emp->setPosition($manager->merge($this->getReference('pos-'.rand(1,5))));
             $emp->setSalary(rand(2000, 3500));
             $emp->setDate(new \DateTime('2017-08-03'));
 
@@ -32,6 +33,6 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
 
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

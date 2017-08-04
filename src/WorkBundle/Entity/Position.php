@@ -22,7 +22,7 @@ class Position
     /**
      * @var int
      */
-    private $parent;
+    private $parentId;
 
     /**
      * @var string
@@ -30,14 +30,21 @@ class Position
     private $name;
 
     /**
-     * @var Object
+     * @var int
      */
-    private $emp;
+    private $position;
 
+
+    protected $employee = array();
+
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
 
     public function __construct()
     {
-        $this->emp = new ArrayCollection();
+        $this->employee = new ArrayCollection();
     }
 
     /**
@@ -75,27 +82,39 @@ class Position
     }
 
     /**
-     * Set parent
+     * Set parentId
      *
-     * @param integer $parent
+     * @param integer $parentId
      *
      * @return Position
      */
-    public function setParent($parent)
+    public function setParentId($parentId)
     {
-        $this->parent = $parent;
+        $this->parentId = $parentId;
 
         return $this;
     }
 
     /**
-     * Get parent
+     * Get parentId
      *
      * @return int
      */
-    public function getParent()
+    public function getParentId()
     {
-        return $this->parent;
+        return $this->parentId;
+    }
+
+    public function setPosition(Position $position = null)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    public function getPosition()
+    {
+        return $this->position;
     }
 
     /**
@@ -120,6 +139,16 @@ class Position
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param Employee $employee
+     * @return $this
+     */
+    public function addEmployee(Employee $employee)
+    {
+        $this->employee[] = $employee;
+        return $this;
     }
 }
 
