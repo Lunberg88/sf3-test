@@ -1,0 +1,10 @@
+{% extends '@Work/Default/layout.html.twig' %}
+    {% block content %}
+        {% if session %}
+            {% for sess in session %}
+            <p>{{ sess }}</p>
+            {% endfor %}
+        {% else %}
+            <b>Error!</b>
+        {% endif %}
+    {% endblock %}
