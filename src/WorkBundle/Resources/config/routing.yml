@@ -1,6 +1,6 @@
-work_emp:
-    resource: "@WorkBundle/Resources/config/routing/emp.yml"
-    prefix:   /emp
+work_employee:
+        resource: "@WorkBundle/Resources/config/routing/employee.yml"
+        prefix:   /employee
 
 work_homepage:
     path:           /

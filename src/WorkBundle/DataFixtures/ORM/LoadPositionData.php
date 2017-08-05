@@ -22,18 +22,14 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $pos1 = new Position();
         $pos1->setNumber('2');
         $pos1->setPosition($manager->merge($this->getReference('pos1')));
-        //$pos1->setParentId('1');
         $pos1->setName('Commercial Director');
         $manager->persist($pos1);
         $this->addReference('pos2', $pos1);
         $manager->flush();
 
-
-
         $pos2 = new Position();
         $pos2->setNumber('3');
         $pos2->setPosition($manager->merge($this->getReference('pos2')));
-        //$pos2->setParentId('2');
         $pos2->setName('Tech Director');
         $manager->persist($pos2);
         $this->addReference('pos3', $pos2);
@@ -42,7 +38,6 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $pos3 = new Position();
         $pos3->setNumber('4');
         $pos3->setPosition($manager->merge($this->getReference('pos3')));
-        //$pos3->setParentId('3');
         $pos3->setName('Talent Manager');
         $manager->persist($pos3);
         $this->addReference('pos4', $pos3);
@@ -51,7 +46,6 @@ class LoadPositionData extends AbstractFixture implements OrderedFixtureInterfac
         $pos4 = new Position();
         $pos4->setNumber('5');
         $pos4->setPosition($manager->merge($this->getReference('pos4')));
-        //$pos4->setParentId('4');
         $pos4->setName('Worker');
         $manager->persist($pos4);
         $this->addReference('pos5', $pos4);
