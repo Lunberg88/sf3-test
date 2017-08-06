@@ -19,4 +19,14 @@ class EmployeeRepository extends EntityRepository
             )
             ->getResult();
     }
+
+    public function getByArray()
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT e.id, e.fio, e.salary, e.positionId, e.date, p.name FROM WorkBundle:Employee e 
+                JOIN WorkBundle:Position p 
+                WHERE e.positionId = p.id 
+                ORDER BY e.id ASC")
+            ->getArrayResult();
+    }
 }

@@ -1,7 +1,14 @@
 $(function(){
-
-    $('#ds').click(function() {
+    $('#sbox').click(function() {
         $('#res').css('display', 'none');
-        $('#res').html('<div class="col-md-6">No res!</div>');
-    })
+        $.getJSON('getajax', function(data) {
+            var html ="<br>";
+            for(var x in data) {
+                for (var s in data[x].date) {
+                       html += "<div class=row>" + data[x].fio + " | " + data[x].positionId + " | " + data[x].salary + " | " + data[x].name + " </div><br>";
+                       $('#myres').html(html);
+                }
+            }
+        });
+    });
 });

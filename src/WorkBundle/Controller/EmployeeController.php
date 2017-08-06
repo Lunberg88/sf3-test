@@ -9,6 +9,8 @@ use WorkBundle\Entity\Employee;
 use WorkBundle\Entity\Search;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Employee controller.
@@ -187,5 +189,15 @@ class EmployeeController extends Controller
         return $this->render('employee/search.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    public function getajaxAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository(Employee::class)
+            ->getByArray();
+
+        return JsonResponse::create($data, 200)
+            ->setSharedMaxAge(300);
     }
 }

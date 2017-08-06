@@ -2,6 +2,15 @@
 
 {% block body %}
     <h1><b>Employee's list</b></h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+             <button id="sbox" class="btn btn-danger">Get result!</button>
+            </div>
+        </div>
+    </div>
+    <hr>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -10,10 +19,6 @@
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
             </td>
-            {#
-            <td colspan="5"><input type="text" name="search_f" class="form-control" style="width:40%;" placeholder="Enter value..."></td>
-            <td><button id="ds" name="do_search" class="btn btn-default">Search!</button></td>
-            #}
         </tr>
         <tr>
             {# sorting of properties based on query components #}
@@ -53,6 +58,10 @@
     {# total items count #}
     <div class="count">
        Total records: ({{ pagination.getTotalItemCount }})
+    </div>
+    <div id="myres" class="container">
+        <div class="row">
+        </div>
     </div>
 {% endblock %}
 
