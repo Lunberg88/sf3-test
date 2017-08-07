@@ -46,14 +46,12 @@ class EmployeeController extends Controller
         }
 
         $em    = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT e.id, e.fio, e.salary, e.positionId, e.date, p.name, p.parentId, (SELECT ps.name FROM WorkBundle:Position ps WHERE ps.parentId = e.positionId) as parent FROM WorkBundle:Employee e 
+        $dql = "SELECT e.id, e.fio, e.salary, e.positionId, e.date, p.name, p.parentId, (SELECT ps.name FROM WorkBundle:Position ps WHERE p.parentId = ps.number) as parent FROM WorkBundle:Employee e 
                 JOIN WorkBundle:Position p
                 WHERE e.positionId = p.number
                 ORDER BY p.id ASC";
 
-        $query = $em->createQuery($dql) /*->getArrayResult()*/;
-        //echo "<pre>".print_r($query,1)."</pre>";
-        //exit();
+        $query = $em->createQuery($dql)->getResult();
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(

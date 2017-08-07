@@ -19,7 +19,7 @@
              <th{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Position', 'p.name') }}</th>
             <th{% if pagination.isSorted('e.salary') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Salary', 'e.salary') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Release', ['e.date']) }}</th>
-            <th{% if pagination.isSorted('parent') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Subordinate', 'parent') }}</th>
+            <th{% if pagination.isSorted('parent') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Chief', 'parent') }}</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -34,7 +34,7 @@
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.salary }}</td>
                 <td>{{ employee.date | date('Y-m-d') }}</td>
-                <td>{{ employee.parent }}</td>
+                <td>{% if employee.parent != null %}{{ employee.parent }}{% else %} -------- {% endif %}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('employee_show', { 'id': employee.id }) }}">show</a>
                     <a class="btn btn-warning" href="{{ path('employee_edit', { 'id': employee.id }) }}">edit</a>
