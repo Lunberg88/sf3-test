@@ -5,12 +5,13 @@
             <table class="table table-striped">
             <thead>
             <tr>
-                <th>id</th>
-                <th>fio</th>
-                <th>position</th>
-                <th>salary</th>
-                <th>date</th>
-                <th>position name</th>
+                <th>Id</th>
+                <th>Fio</th>
+                <th>Position</th>
+                <th>Salary</th>
+                <th>Date</th>
+                <th>Position name</th>
+                <th>Action</th>
             </tr>
             </thead>
             {% for res in find %}
@@ -23,6 +24,10 @@
                             <td>{{ res.salary }}</td>
                             <td>{{ res.date | date('Y-m-d') }}</td>
                             <td>{{ res.name }}</td>
+                            <td>
+                                <a class="btn btn-info" href="{{ path('employee_show', { 'id': res.id }) }}">show</a>
+                                <a class="btn btn-warning" href="{{ path('employee_edit', { 'id': res.id }) }}">edit</a>
+                            </td>
                         </tr>
             {% endfor %}
                     </tbody>

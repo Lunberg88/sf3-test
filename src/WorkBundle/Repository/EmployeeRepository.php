@@ -15,8 +15,7 @@ class EmployeeRepository extends EntityRepository
                           WHERE e.positionId = p.id AND
                           e.fio LIKE '%".$param."%' OR 
                           e.positionId LIKE '%".$param."%' OR
-                          e.salary LIKE '%".$param."%'"
-            )
+                          e.salary LIKE '%".$param."%'")
             ->getResult();
     }
 
@@ -27,6 +26,20 @@ class EmployeeRepository extends EntityRepository
                 JOIN WorkBundle:Position p 
                 WHERE e.positionId = p.id 
                 ORDER BY e.id ASC")
+            ->setMaxResults(25)
             ->getArrayResult();
+    }
+
+    public function getByAjaxSearch($param)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT e.id, e.fio, e.positionId, e.salary, e.date, p.name FROM WorkBundle:Employee e JOIN WorkBundle:Position p 
+                          WHERE e.positionId = p.id AND
+                          e.fio LIKE '%".$param."%' OR 
+                          e.positionId LIKE '%".$param."%' OR
+                          e.salary LIKE '%".$param."%'")
+            ->setMaxResults(25)
+            ->getResult();
     }
 }

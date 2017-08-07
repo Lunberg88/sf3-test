@@ -24,7 +24,6 @@ class EmployeeController extends Controller
      */
     public function indexAction(Request $request)
     {
-        /***************** Searching form *********************/
         $search = new Search();
 
         $form = $this->createFormBuilder($search)
@@ -45,23 +44,24 @@ class EmployeeController extends Controller
                 'find' => $find,
             ]);
         }
-        /***            Select all entity's                 ***/
-        $em    = $this->get('doctrine.orm.entity_manager');
-        $dql = "SELECT e.id, e.fio, e.salary, e.positionId, e.date, p.name FROM WorkBundle:Employee e 
-                JOIN WorkBundle:Position p 
-                WHERE e.positionId = p.id 
-                ORDER BY e.id ASC";
 
-        $query = $em->createQuery($dql);
+        $em    = $this->get('doctrine.orm.entity_manager');
+        $dql = "SELECT e.id, e.fio, e.salary, e.positionId, e.date, p.name, p.parentId, (SELECT ps.name FROM WorkBundle:Position ps WHERE ps.parentId = e.positionId) as parent FROM WorkBundle:Employee e 
+                JOIN WorkBundle:Position p
+                WHERE e.positionId = p.number
+                ORDER BY p.id ASC";
+
+        $query = $em->createQuery($dql) /*->getArrayResult()*/;
+        //echo "<pre>".print_r($query,1)."</pre>";
+        //exit();
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            25
         );
 
-        // parameters to template
         return $this->render('employee/index.html.twig', [
             'pagination' => $pagination,
             'form' => $form->createView(),
@@ -196,6 +196,16 @@ class EmployeeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $data = $em->getRepository(Employee::class)
             ->getByArray();
+
+        return JsonResponse::create($data, 200)
+            ->setSharedMaxAge(300);
+    }
+
+    public function ajaxsearch()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $em->getRepository(Employee::class)
+            ->getByAjaxSearch();
 
         return JsonResponse::create($data, 200)
             ->setSharedMaxAge(300);

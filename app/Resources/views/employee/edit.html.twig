@@ -5,17 +5,12 @@
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" class="btn btn-success" style="width:100px;" value="Edit" />
     {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('employee_index') }}">Back to the list</a>
-        </li>
-        <li>
+<br>
+            <a href="{{ path('employee_index') }}" class="btn btn-default" style="width:120px;">Back to the list</a><br>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <br><input type="submit" class="btn btn-danger" style="width:100px;" value="Delete">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+<br>
 {% endblock %}

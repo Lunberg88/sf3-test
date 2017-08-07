@@ -3,18 +3,10 @@
 {% block body %}
     <h1><b>Employee's list</b></h1>
     <hr>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-             <button id="sbox" class="btn btn-danger">Get result!</button>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <table class="table table-striped">
+    <table class="table table-striped" id="mtab">
         <thead>
         <tr>
-            <td colspan="7">
+            <td colspan="6">
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 {{ form_end(form) }}
@@ -24,23 +16,25 @@
             {# sorting of properties based on query components #}
             <th>{{ knp_pagination_sortable(pagination, 'Id', 'e.id') }}</th>
             <th{% if pagination.isSorted('e.fio') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Fio', 'e.fio') }}</th>
-            <th{% if pagination.isSorted('e.positionId') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'positionId', 'e.positionId') }}</th>
-            <th{% if pagination.isSorted('e.salary') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'salary', 'e.salary') }}</th>
+             <th{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Position', 'p.name') }}</th>
+            <th{% if pagination.isSorted('e.salary') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Salary', 'e.salary') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Release', ['e.date']) }}</th>
-            <th>Position Name</th>
+            <th{% if pagination.isSorted('parent') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Subordinate', 'parent') }}</th>
             <th>Actions</th>
         </tr>
         </thead>
+        <tbody id="myres">
+        </tbody>
         <tbody id="res">
         {# table body #}
         {% for employee in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
                 <td>{{ employee.id }}</td>
                 <td>{{ employee.fio }}</td>
-                <td>{{ employee.positionId }}</td>
+                <td>{{ employee.name }}</td>
                 <td>{{ employee.salary }}</td>
                 <td>{{ employee.date | date('Y-m-d') }}</td>
-                <td>{{ employee.name }}</td>
+                <td>{{ employee.parent }}</td>
                 <td>
                     <a class="btn btn-info" href="{{ path('employee_show', { 'id': employee.id }) }}">show</a>
                     <a class="btn btn-warning" href="{{ path('employee_edit', { 'id': employee.id }) }}">edit</a>
@@ -58,10 +52,6 @@
     {# total items count #}
     <div class="count">
        Total records: ({{ pagination.getTotalItemCount }})
-    </div>
-    <div id="myres" class="container">
-        <div class="row">
-        </div>
     </div>
 {% endblock %}
 
