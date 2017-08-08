@@ -32,3 +32,8 @@ employee_getajax:
     path:     /getajax
     defaults: { _controller: "WorkBundle:Employee:getajax" }
     methods:  GET
+
+employee_ajaxsearch:
+    path:     /ajaxsearch/{text}
+    defaults: { _controller: "WorkBundle:Employee:ajaxsearch" }
+    methods: [GET, POST]

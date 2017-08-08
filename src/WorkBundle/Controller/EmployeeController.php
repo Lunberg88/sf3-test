@@ -10,7 +10,6 @@ use WorkBundle\Entity\Search;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use WorkBundle\WorkBundle;
 
 
 /**
@@ -200,11 +199,16 @@ class EmployeeController extends Controller
             ->setSharedMaxAge(300);
     }
 
-    public function ajaxsearch()
+    public function ajaxsearchAction($text)
     {
         $em = $this->getDoctrine()->getManager();
         $data = $em->getRepository(Employee::class)
-            ->getByAjaxSearch();
+            ->getByAjaxSearch($text);
+
+        if(!$data) {
+            return JsonResponse::create('No matches found!', 400)
+                ->setSharedMaxAge(300);
+        }
 
         return JsonResponse::create($data, 200)
             ->setSharedMaxAge(300);
