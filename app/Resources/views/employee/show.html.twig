@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Employee</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ employee.id }}</td>
+            </tr>
+            <tr>
+                <th>Fio</th>
+                <td>{{ employee.fio }}</td>
+            </tr>
+            <tr>
+                <th>Position</th>
+                <td>{{ employee.position }}</td>
+            </tr>
+            <tr>
+                <th>Salary</th>
+                <td>{{ employee.salary }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if employee.date %}{{ employee.date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+            <a class="btn btn-default" href="{{ path('employee_index') }}">Back to the list</a>
+            <a class="btn btn-warning" href="{{ path('employee_edit', { 'id': employee.id }) }}">Edit</a>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+    <br><br>
+{% endblock %}

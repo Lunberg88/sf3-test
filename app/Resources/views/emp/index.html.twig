@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Emps list</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'e.id') }}</th>
+            <th{% if pagination.isSorted('e.fio') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Fio', 'e.fio') }}</th>
+            <th{% if pagination.isSorted('e.pos') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'pos', 'e.pos') }}</th>
+            <th{% if pagination.isSorted('e.salary') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'salary', 'e.salary') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Release', ['e.date']) }}</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="res">
+        <tr>
+            <td colspan="5"><input type="text" name="search_f" class="form-control" style="width:40%;" placeholder="Enter value..."></td>
+            <td><button id="ds" name="do_search" class="btn btn-default">Search!</button></td>
+        </tr>
+
+        {# table body #}
+        {% for emp in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ emp.id }}</td>
+                <td>{{ emp.fio }}</td>
+                <td>{{ emp.pos }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{{ emp.date | date('Y-m-d') }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('emp_show', { 'id': emp.id }) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('emp_edit', { 'id': emp.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="{{ path('emp_new') }}">Create a new emp</a>
+    <br><br>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {# total items count #}
+    <div class="count">
+       Total records: ({{ pagination.getTotalItemCount }})
+    </div>
+
+
+{#
+    {% if not app.user %}
+        <p class="nav navbar-nav navbar-right form-inline"><a
+                    href="{{ path('fos_user_security_login') }}">Вход/регистрация</a></p>
+
+    <h1>Emps list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><a href="?filter=id">Id</a></th>
+                <th><a href="?filter=fio">Fio</a></th>
+                <th><a href="?filter=position">Position</a></th>
+                <th><a href="?filter=salary">Salary</a></th>
+                <th><a href="?filter=date">Date</a></th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="res">
+        <tr>
+            <td colspan="5"><input type="text" name="search_f" class="form-control" style="width:40%;" placeholder="Enter value..."></td>
+                <td><button id="ds" name="do_search" class="btn btn-default">Search!</button></td>
+        </tr>
+        {% for emp in emps %}
+            <tr>
+                <td><a href="{{ path('emp_show', { 'id': emp.id }) }}">{{ emp.id }}</a></td>
+                <td>{{ emp.fio }}</td>
+                <td>{{ emp.position }}</td>
+                <td>{{ emp.salary }}</td>
+                <td>{% if emp.date %}{{ emp.date|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('emp_show', { 'id': emp.id }) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('emp_edit', { 'id': emp.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <a class="btn btn-success" href="{{ path('emp_new') }}">Create a new emp</a>
+    <br><br>
+    {% endif %}
+    #}
+{% endblock %}
+

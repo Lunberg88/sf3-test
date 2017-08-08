@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% block fos_user_content %}
+    <h1><b>Employee's list</b></h1>
+    <hr>
+    <table class="table table-striped" id="mtab">
+        <thead>
+        <tr>
+            <td colspan="6">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </td>
+        </tr>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'e.id') }}</th>
+            <th{% if pagination.isSorted('e.fio') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Fio', 'e.fio') }}</th>
+             <th{% if pagination.isSorted('p.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Position', 'p.name') }}</th>
+            <th{% if pagination.isSorted('e.salary') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Salary', 'e.salary') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Release', ['e.date']) }}</th>
+            <th{% if pagination.isSorted('parent') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Chief', 'parent') }}</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="myres">
+        </tbody>
+        <tbody id="res">
+        {# table body #}
+        {% for employee in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.fio }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.salary }}</td>
+                <td>{{ employee.date | date('Y-m-d') }}</td>
+                <td>{% if employee.parent != null %}{{ employee.parent }}{% else %} -------- {% endif %}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('employee_show', { 'id': employee.id }) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('employee_edit', { 'id': employee.id }) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a id="create" class="btn btn-success" href="{{ path('employee_new') }}">Create a new emp</a>
+    <br><br>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    {# total items count #}
+    <div class="count">
+       Total records: ({{ pagination.getTotalItemCount }})
+    </div>
+    <br><br>
+    {% endblock fos_user_content %}
+          {% else %}
+            Only for users!
+
+        {% endif %}
+
+{% endblock %}
+
